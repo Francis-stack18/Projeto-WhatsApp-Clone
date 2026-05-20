@@ -159,7 +159,7 @@ class WhatsAppCotroller {
     });
 
     this.el.btnTakePicture.on("click", (e) => {
-        console.log("Taking picture")
+      console.log("Taking picture");
     });
 
     this.el.btnAttachDocument.on("click", (e) => {
@@ -186,6 +186,34 @@ class WhatsAppCotroller {
     this.el.btnCloseModalContacts.on("click", (e) => {
       this.el.modalContacts.hide();
     });
+
+    this.el.btnSendMicrophone.on("click", (e) => {
+      this.el.recordMicrophone.show();
+      this.el.btnSendMicrophone.hide();
+      this.startRecordMicrophoneTime();
+    });
+
+    this.el.btnCancelMicrophone.on("click", (e) => {
+      this.closeRecordMicrophone();
+    });
+
+    this.el.btnFinishMicrophone.on("click", (e) => {
+      this.closeRecordMicrophone();
+    });
+  }
+
+  startRecordMicrophoneTime() {
+    let start = Date.now();
+
+    this._recordMicrophoneInterval = setInterval(() => {
+      this.el.recordMicrophoneTimer.innerHTML = Date.now() - start;
+    }, 100);
+  }
+
+  closeRecordMicrophone() {
+    this.el.recordMicrophone.hide();
+    this.el.btnSendMicrophone.show();
+    clearInterval(this._recordMicrophoneInterval);
   }
 
   closeAllMainPanel() {
