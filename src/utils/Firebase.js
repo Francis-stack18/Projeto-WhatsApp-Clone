@@ -18,14 +18,10 @@ export class Firebase {
   }
 
   init() {
-    if (!this._initialized) {
-      firebase.initializeApp(this._config);
+    if (!window._initializedFirebase) {
+      Firebase._app = firebase.initializeApp(this._config);
 
-      firebase.firestore().settings({
-        timestampsInSnapshots: true,
-      });
-
-      this._initialized = true;
+      window._initializedFirebase = true;
     }
   }
 
@@ -35,6 +31,22 @@ export class Firebase {
 
   static hd() {
     return getStorage();
+  }
+
+  init() {
+    if (!window._initializedFirebase) {
+      Firebase._app = firebase.initializeApp(this._config);
+
+      window._initializedFirebase = true;
+    }
+  }
+
+  static db() {
+    return firebase.firestore();
+  }
+
+  static hd() {
+    return firebase.storage();
   }
 
   initAuth() {
@@ -47,6 +59,7 @@ export class Firebase {
         .then((result) => {
           let token = result.credential.accessToken;
           let user = result.user;
+
           resolve({ user, token });
         })
         .catch((err) => {
