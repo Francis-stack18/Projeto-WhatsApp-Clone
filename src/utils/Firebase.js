@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
+import "firebase/compat/auth";
 
 export class Firebase {
   constructor() {
@@ -34,5 +35,23 @@ export class Firebase {
 
   static hd() {
     return getStorage();
+  }
+
+  initAuth() {
+    return new Promise((resolve, reject) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          let token = result.credential.accessToken;
+          let user = result.user;
+          resolve({ user, token });
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 }
