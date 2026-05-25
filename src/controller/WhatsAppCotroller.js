@@ -2,12 +2,14 @@ import { Format } from "../utils/Format";
 import { CameraController } from "./CameraController";
 import { MicrophoneController } from "./MicrophoneController.js";
 import { DocumentPreviewController } from "./DocumentPreviewController";
+import { Firebase } from "../utils/Firebase.js";
 
 export class WhatsAppCotroller {
   constructor() {
     this.elementsPrototype();
     this.loadElements();
     this.initEvents();
+    this._firebase = new Firebase();
   }
 
   loadElements() {
