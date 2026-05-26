@@ -160,12 +160,19 @@ export class WhatsAppCotroller {
     });
 
     this.el.btnSavePanelEditProfile.on("click", (e) => {
-      console.log();
+      this.el.btnSavePanelEditProfile.disabled = true;
+
+      this._user.name = this.el.inputNamePanelEditProfile.innerHTML;
+
+      this._user.save().then(() => {
+        this.el.btnSavePanelEditProfile.disabled = false;
+      });
     });
 
     this.el.formPanelAddContact.on("submit", (e) => {
       e.preventDefault();
       let formData = new FormData(this.el.formPanelAddContact);
+      
     });
 
     this.el.contactsMessagesList
