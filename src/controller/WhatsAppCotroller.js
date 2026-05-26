@@ -172,7 +172,18 @@ export class WhatsAppCotroller {
     this.el.formPanelAddContact.on("submit", (e) => {
       e.preventDefault();
       let formData = new FormData(this.el.formPanelAddContact);
-      
+      let contact = new User(formData.get("email"));
+
+      contact.on("datachange", (data) => {
+        if (data.name) {
+          this._user.addContact(contact).then(() => {
+            this.el.btnClosePanelAddContact.click();
+            console.log("Contato foi adicionado");
+          });
+        } else {
+          console.error("User não encontrado");
+        }
+      });
     });
 
     this.el.contactsMessagesList
