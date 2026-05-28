@@ -6,6 +6,7 @@ import { Firebase } from "../utils/Firebase.js";
 import { User } from "../model/User.js";
 import { Chat } from "../model/Chat.js";
 import { Message } from "../model/Message.js";
+import { Base64 } from "../utils/Base64";
 
 export class WhatsAppCotroller {
   constructor() {
@@ -152,6 +153,7 @@ export class WhatsAppCotroller {
     this.el.main.css({
       display: "flex",
     });
+
     this.el.panelMessagesContainer.innerHTML = "";
 
     Message.getRef(this._contactActive.chatId)
@@ -166,8 +168,10 @@ export class WhatsAppCotroller {
         docs.forEach((doc) => {
           let data = doc.data();
           data.id = doc.id;
+
           let message = new Message();
           message.fromJSON(data);
+
           let me = data.from === this._user.email;
 
           if (!this.el.panelMessagesContainer.querySelector("#_" + data.id)) {
@@ -185,15 +189,29 @@ export class WhatsAppCotroller {
             let view = message.getViewElement(me);
 
             this.el.panelMessagesContainer.appendChild(view);
-          } else if (me) {
+          } else {
+            let view = message.getViewElement(me);
+
+            this.el.panelMessagesContainer.querySelector(
+              "#_" + data.id,
+            ).innerHTML = view.innerHTML;
+          }
+
+          if (
+            this.el.panelMessagesContainer.querySelector("#_" + data.id) &&
+            me
+          ) {
             let msgEl = this.el.panelMessagesContainer.querySelector(
               "#_" + data.id,
             );
 
-            msgEl.querySelector(".message-status").innerHTML =
-              message.getStatusViewElement().outerHTML;
+            let statusEl = msgEl.querySelector(".message-status");
+            if (statusEl) {
+              statusEl.innerHTML = message.getStatusViewElement().outerHTML;
+            }
           }
         });
+
         if (autoScroll) {
           this.el.panelMessagesContainer.scrollTop =
             this.el.panelMessagesContainer.scrollHeight -
@@ -551,7 +569,28 @@ export class WhatsAppCotroller {
     });
 
     this.el.btnSendDocument.on("click", (e) => {
-      console.log("Send document");
+      let file = this.el.inputDocument.files[0];
+      let base64 = this.el.imgPanelDocumentPreview.src;
+
+      if (file.type === "application/pdf") {
+        Base64.toFile(base64).then((filePreview) => {
+          Message.sendDocument(
+            this._contactActive.chatId,
+            this._user.email,
+            file,
+            filePreview,
+            this.el.infoPanelDocumentPreview.innerHTML,
+          );
+        });
+      } else {
+        Message.sendDocument(
+          this._contactActive.chatId,
+          this._user.email,
+          file,
+        );
+      }
+
+      this.el.btnClosePanelDocumentPreview.click();
     });
 
     this.el.btnAttachContact.on("click", (e) => {
