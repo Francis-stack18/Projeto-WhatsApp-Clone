@@ -225,11 +225,11 @@ export class WhatsAppCotroller {
                   contact.chatId = chat.id;
                   this._user.chatId = chat.id;
 
-                  this._user.addContact(contact)
+                  this._user.addContact(contact);
 
                   contact.addContact(this._user);
 
-                  this.setActiveChat(contact)
+                  this.setActiveChat(contact);
                 });
               });
             });
@@ -660,6 +660,15 @@ export class WhatsAppCotroller {
 
     this.el.btnFinishMicrophone.on("click", (e) => {
       this._microphoneController.stopRecorder();
+      this._microphoneController.on("recorded", (file, metadata) => {
+        Message.sendAudio(
+          this._contactActive.chatId,
+          this._user.email,
+          file,
+          metadata,
+          this._user.photo,
+        );
+      });
       this.closeRecordMicrophone();
     });
 
