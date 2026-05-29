@@ -1,22 +1,54 @@
-# Projeto WhatsApp Clone
+# WhatsApp Clone 💬
 
-[![Hcode Treinamentos](https://www.hcode.com.br/res/img/hcode-200x100.png)](https://www.hcode.com.br)
+Um web app em tempo real inspirado na interface e funcionalidades do WhatsApp Web. Este projeto foi desenvolvido para aprofundar conceitos de JavaScript assíncrono, manipulação de DOM e integração com arquitetura Serverless (Backend as a Service).
 
-Projeto desenvolvido como exemplo do Curso Completo de JavaScript na Udemy.com.
+## 🚀 Tecnologias Utilizadas
 
-### Projeto
-![WhatsApp Clone](https://firebasestorage.googleapis.com/v0/b/hcode-com-br.appspot.com/o/whatsapp.jpg?alt=media&token=5fc78e3b-4871-424f-abfa-b765f2515d0c)
+* **Frontend:** JavaScript puro (Vanilla JS), HTML5, CSS3
+* **Bundler:** Webpack
+* **Backend & Banco de Dados:** Firebase (Firestore Database)
+* **Armazenamento em Nuvem:** Firebase Storage (Imagens, Áudios e Documentos)
+* **Serverless:** Firebase Cloud Functions (Node.js)
 
-### Recursos Usados
+## ✨ Funcionalidades
 
-Lista de recursos usados em aula para este projeto
+* **Autenticação:** Login de usuários.
+* **Chat em Tempo Real:** Envio e recebimento de mensagens instantâneas via Firestore.
+* **Envio de Mídia:** Suporte para upload de Imagens e Documentos em PDF.
+* **Mensagens de Áudio:** Gravação e envio de áudio diretamente pelo microfone do navegador.
+* **Cloud Functions:** Gatilhos no backend para atualizar a última mensagem e o horário no painel de contatos automaticamente.
+* **Gestão de Perfil:** Atualização de foto de perfil e nome de usuário.
 
-| Recurso | Link |
-| ------ | ------ |
-| Webpack | https://webpack.js.org/ |
-| Firebase Authentication | https://firebase.google.com/docs/auth/?authuser=0 |
-| Cloud Firestore | https://firebase.google.com/docs/firestore/?authuser=0 |
-| Cloud Functions | https://firebase.google.com/docs/functions/?hl=pt-br |
-| Cloud Storage | https://firebase.google.com/docs/storage/?authuser=0 |
-| PDF.js | https://mozilla.github.io/pdf.js/ |
-| MediaDevices.getUserMedia() | https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia |
+## 🛠️ Como rodar o projeto localmente
+
+Siga os passos abaixo para testar o projeto na sua máquina:
+
+### 1. Clone o repositório
+```bash
+git clone [https://github.com/SEU-USUARIO/whatsapp-clone.git](https://github.com/SEU-USUARIO/whatsapp-clone.git)
+```
+
+### 2. Instale as dependências
+Navegue até a pasta do projeto e instale os pacotes do NPM:
+```bash
+cd whatsapp-clone
+npm install
+```
+
+### 3. Configuração do Firebase (.env)
+Crie um arquivo chamado `.env` na raiz do projeto e adicione as suas chaves do Firebase (você pode encontrá-las nas configurações do seu projeto no console do Firebase):
+
+```env
+FIREBASE_API_KEY=sua_api_key
+FIREBASE_AUTH_DOMAIN=seu_auth_domain
+FIREBASE_PROJECT_ID=seu_project_id
+FIREBASE_STORAGE_BUCKET=seu_storage_bucket
+FIREBASE_MESSAGING_SENDER_ID=seu_sender_id
+FIREBASE_APP_ID=seu_app_id
+```
+
+### 4. Inicie o servidor de desenvolvimento
+```bash
+npm run start
+```
+O projeto estará rodando no seu `localhost`.
